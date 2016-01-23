@@ -1,0 +1,22 @@
+{
+  "name": "untitled-greensock-experiment-one",
+  "version": "1.0.0",
+  "description": "untitled-greensock-experiment-one",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/notmodified/untitled-greensock-experiment-one.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/notmodified/untitled-greensock-experiment-one/issues"
+  },
+  "homepage": "https://github.com/notmodified/untitled-greensock-experiment-one#readme",
+  "dependencies": {
+    "file-loader": "^0.8.5"
+  }
+}
