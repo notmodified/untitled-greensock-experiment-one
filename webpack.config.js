@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 
 const config = {
-  entry: "./src/main.jsx",
+  entry: "./src/index.jsx",
   devtool: 'source-map',
   output: {
     filename: "./dist/bundle.js"
