@@ -1,3 +1,32 @@
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > .emojione {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+li {
+  list-style: none;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
 
 .board {
   display: flex;
@@ -5,27 +34,30 @@
 }
 
 .tile {
-  flex: 0 0 25%;
-  width: 20%;
-  height: 20%;
+  flex: 0 0 16.66667%;
   transform-style: preserve-3d;
   position: relative;
-  z-index: 0;
-  border: 1px solid red;
+  display: block;
+  perspective: 10px;
 
   &__back {
     transform: rotateY(-180deg);
-  }
-
-  &__back, &__front {
-    width: 100%;
-    height: 100%;
-    position: absolute;
     backface-visibility: hidden;
+    position: absolute;
+    top: 5%; left: 0; right: 0; bottom: 0;
+    text-align: center;
 
     & > svg {
-      height: 100%;
-      width: 100%;
+      width: 90%;
+      height: 90%;
     }
   }
+
+  img {
+    backface-visibility: hidden;
+  }
+}
+
+.sixteen-nine {
+  @include aspect-ratio(16, 9);
 }

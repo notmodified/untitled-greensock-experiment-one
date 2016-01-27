@@ -2,6 +2,7 @@ import {combineReducers} from 'redux';
 
 import * as R from 'ramda';
 import emojione from 'emojione';
+import people from './people';
 import shuffle from './shuffle';
 
 
@@ -19,27 +20,39 @@ const markFound = e => Object.assign({}, e, {found: true});
 const doneAnimateToggleFlip = R.adjust(R.compose(doneAnimating, notFlipped));
 const doneAnimateMarkFound = R.adjust(R.compose(doneAnimating, notFlipped, markFound));
 
-const keys = Object.keys(emojione.emojioneList);
-const max = keys.length;
-const randomKey = _ => keys[Math.floor(Math.random() * max)];
-const fiveRandom = _ => R.times(randomKey, 5);
-const tenRandom = _ => {
-  const five = fiveRandom();
-  return shuffle([...five, ...five]);
-}
-
-const Card = {
+const Tile = {
   id: undefined,
   value: '',
   animating: false,
   flipped: false,
-  found: false
+  found: false,
+  img: '',
+  name: '',
+  role: ''
+}
+
+const keys = Object.keys(emojione.emojioneList);
+const randomKey = _ => ({value: keys[Math.floor(Math.random() * keys.length)]});
+
+const halfRandom = _ => R.times(randomKey, people.length/2);
+const allRandom = _ => {
+  const half = halfRandom();
+  return shuffle([...half, ...half]);
+}
+
+const tiles = people.map((p, id) => Object.assign(Object.create(Tile), p, {id}));
+
+const emodTiles = _ => {
+  const random = allRandom();
+  const assign = R.curry(Object.assign, {});
+
+  return R.zipWith(assign, tiles, random);
 }
 
 function board(state, {type, payload}) {
 
   if (!state) {
-    return tenRandom().map((value, id) => Object.assign(Object.create(Card), {id, value}));
+    return emodTiles();
   }
 
   switch (type) {

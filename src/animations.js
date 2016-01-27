@@ -1,19 +1,5 @@
 import 'gsap';
 
-const showBack = [
-  1.5, { css: {rotationY: "+=180"}, ease: Power2.easeInOut,
-    onComplete: _ => console.log('back')
-  }
-];
-const showFront = [
-  1, {
-    css: {rotationY: "+=180"},
-    ease: Power2.easeInOut,
-    delay: 1,
-    onComplete: _ => console.log('front')
-  }
-];
-
 export function intro (ref, onComplete) {
   TweenMax.set(ref, {clearProps:"all"});
 
@@ -26,23 +12,34 @@ export function intro (ref, onComplete) {
   const t1 = new TimelineMax({onComplete});
 
   t1
-    .add(TweenMax.staggerTo(ref, ...showBack, 0.2))
+    .add(TweenMax.staggerTo(ref, 1.5, {css: {rotationY: "+=180"}, ease: Power2.easeInOut}, 0.2))
     .add(countDown)
-    .add(TweenMax.staggerTo(ref, 1, Object.assign({}, showFront[1], {delay: 0}), 0.2))
+    .add(TweenMax.staggerTo(ref, 1,
+                            {
+                              css: {rotationY: "+=180"},
+                              ease: Power2.easeInOut,
+                              delay: 0,
+                              onComplete: _ => console.log('front')
+                            },
+                            0.2
+                           ))
 }
 
 export function flip (element, onComplete) {
-  TweenMax.to(element, 1.5, {
-    css:{rotationY:"+=180"},
-    ease:Power2.easeInOut,
-    onComplete
-  });
+  let tl = new TimelineMax({onComplete});
+  tl.to(element, 1.5, {
+    css:{rotationY:"+=180", x:"-=100%",
+    transformOrigin:"right center"},
+    ease:Power2.easeInOut
+  })
+  ;
 }
 
 export function noMatch([first, second], onComplete) {
   let tl = new TimelineMax({onComplete});
   tl
-    .staggerTo([first, second], 1, {css:{rotationY:"-=180"}, ease:Power2.easeInOut}, 0.2)
+    .staggerTo([first, second], 1, {css:{rotationY:"-=180",x:"+=100%"}, ease:Power2.easeInOut}, 0.1)
+   // .to([first, second], 1, {css:{rotationX:"-=80"}, transformOrigin:"", ease:Power2.easeInOut})
 }
 
 export function match([first, second], onComplete) {
